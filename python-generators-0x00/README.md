@@ -23,3 +23,6 @@ Python script [seed.py >>](./seed.py)
 - `create_table(conn)` — creates user_data table inside ALX_prodev.
 
 - `insert_data(conn, 'user_data.csv')` — inserts records into user_data.
+
+## Screenshot
+![](./data.png)
