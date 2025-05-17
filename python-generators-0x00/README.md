@@ -26,3 +26,34 @@ Python script [seed.py >>](./seed.py)
 
 ## Screenshot
 ![](./data.png)
+
+## A generator that streams rows from an SQL database
+
+write a function that uses a generator to fetch rows one by one from the user_data table
+
+```SQL
+  
+def stream_users():
+    ''' Returns user after user using a generator '''
+
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="ALX_prodev"
+    )
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM user_data")
+
+    while True:
+        row = cursor.fetchone()
+        if row is None:
+            break
+        yield row
+
+    cursor.close()
+    connection.close()
+```
+
+## Screenshot
+![](./generator.png)
