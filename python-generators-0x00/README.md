@@ -1,0 +1,25 @@
+## Python Generators
+Python script [seed.py >>](./seed.py)
+- Set up the MySQL database, ALX_prodev with the table user_data with the following fields:
+`user_id(Primary Key, UUID, Indexed)`
+`name (VARCHAR, NOT NULL)`
+`email (VARCHAR, NOT NULL)`
+`age (DECIMAL,NOT NULL)`
+- Populate the database with the sample data from this user_data.csv
+  - Prototypes:
+- `def connect_db()` :- connects to the mysql database server
+- `def create_database(connection)`:- creates the database ALX_prodev if it does not exist
+- `def connect_to_prodev()` connects the the ALX_prodev database in MYSQL
+- `def create_table(connection)`:- creates a table user_data if it does not exists with the required fields
+- `def insert_data(connection, data)`:- inserts data in the database if it does not exist
+
+## seed.py module has these functions:
+- `db_connection()` — connects to MySQL without specifying a database.
+
+- `create_database(conn)` — creates the ALX_prodev database.
+
+- `connect_to_prodev()` — connects specifically to the ALX_prodev DB.
+
+- `create_table(conn)` — creates user_data table inside ALX_prodev.
+
+- `insert_data(conn, 'user_data.csv')` — inserts records into user_data.
