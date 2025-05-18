@@ -7,17 +7,19 @@ def lazypaginate(page_size, offset=0):
     '''
     connection = seed.connect_to_prodev()
     cursor     = connection.cursor()
-    cursor.execute(f"SELECT * FROM user_data LIMIT {page_size} OFFSET {offset}")
+    try:
+        while True:
+            cursor.execute("SELECT * FROM user_data LIMIT %s OFFSET %s", (page_size, offset))
+            rows = cursor.fetchall()
+            if not rows:
+                break
+            yield rows
+            offset += page_size
+    finally:
+        cursor.close()
+        connection.close()
 
-    while True:
-        rows = cursor.fetchmany(page_size)
-        if not rows:
-            break
-        yield rows
-    cursor.close()
-    connection.close()
-
-def paginate_users(page_size, offset):
+def paginate_users(page_size, offset=0):
     ''' 
         Paginated data from the users table
         using a generator to lazily load each page
@@ -26,4 +28,3 @@ def paginate_users(page_size, offset):
 
     for page in pages:
         print(page, end="\n\n")
-    return pages
