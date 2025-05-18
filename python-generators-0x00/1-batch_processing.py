@@ -20,10 +20,12 @@ def batch_processing(batch_size):
     ''' Processes records in batches of batch_size '''
 
     age = 25
+    matched_users = []
     batches = stream_users_in_batches(batch_size)
 
     for batch in batches:
         for user in batch:
             if user['age'] > age:
-                print(user)
-
+                matched_users.append(user)
+    
+    return matched_users
