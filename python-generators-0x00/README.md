@@ -61,3 +61,6 @@ def stream_users():
 ## Batch processing Large Data
 A generator to fetch and process data in batches from the `user_data` table [Batch processing generator >>](./1-batch_processing.py)
 
+## Lazy loading Paginated Data
+[Lazy pagination >>](./2-lazy_paginate.py) Implements a generator function lazypaginate(pagesize) that implements the `paginate_users(page_size, offset)` that will only fetch the next page when needed at an offset of `0`.
+
