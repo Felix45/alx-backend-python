@@ -64,3 +64,7 @@ A generator to fetch and process data in batches from the `user_data` table [Bat
 ## Lazy loading Paginated Data
 [Lazy pagination >>](./2-lazy_paginate.py) Implements a generator function lazypaginate(pagesize) that implements the `paginate_users(page_size, offset)` that will only fetch the next page when needed at an offset of `0`.
 
+## Memory-Efficient Aggregation with Generators
+[Calculate average age generator >>](./4-stream_ages.py) A generator that computes a memory-efficient aggregate function i.e average age for a large dataset
+
+
