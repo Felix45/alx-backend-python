@@ -57,3 +57,7 @@ def stream_users():
 
 ## Screenshot
 ![](./generator.png)
+
+## Batch processing Large Data
+A generator to fetch and process data in batches from the `user_data` table [Batch processing generator >>](./1-batch_processing.py)
+
