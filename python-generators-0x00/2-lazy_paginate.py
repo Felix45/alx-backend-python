@@ -19,7 +19,7 @@ def lazypaginate(page_size, offset=0):
         cursor.close()
         connection.close()
 
-def paginate_users(page_size, offset=0):
+def paginate_users(page_size, offset):
     ''' 
         Paginated data from the users table
         using a generator to lazily load each page
