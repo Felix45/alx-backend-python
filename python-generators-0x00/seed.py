@@ -1,18 +1,19 @@
 import csv
 import uuid
 import mysql.connector
+from settings import host, user, password, database
 
 def db_connection():
     ''' Connect to the ALX_prodev mysql server '''
 
-    conn = mysql.connector.connect(host="localhost", user="root", password="")
+    conn = mysql.connector.connect(host=host, user=user, password=password)
     print("connection successful")
 
     return conn
 
 def connect_to_prodev():
     ''' Connect to the ALX_prodev database '''
-    conn = mysql.connector.connect(host="localhost", user="root", password="", database="ALX_prodev")
+    conn = mysql.connector.connect(host=host, user=user, password=password, database=database)
 
     return conn
 

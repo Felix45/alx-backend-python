@@ -1,8 +1,7 @@
-import mysql.connector
-from settings import host, user, password, database
+import seed
 
 def stream_users_in_batches(batch_size=25):
-    connection = mysql.connector.connect(host=host, user=user,password=password,database=database)
+    connection = seed.connect_to_prodev()
     cursor = connection.cursor(dictionary=True)
 
     cursor.execute("SELECT * FROM user_data")

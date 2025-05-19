@@ -1,14 +1,9 @@
-import mysql.connector
+import seed
 
 def stream_users():
     ''' Returns users using a generator '''
 
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="ALX_prodev"
-    )
+    connection = seed.connect_to_prodev()
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM user_data")
 
