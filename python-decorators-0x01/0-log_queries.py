@@ -3,11 +3,12 @@
 import sqlite3
 import functools
 from faker import Faker
+from datetime import datetime
 
 def log_queries(func):
     ''' Decorator to log SQL queries '''
     def wrapper(*args, **kwargs):
-        print(f"[SQL LOG] Args: {args} Kwargs: {kwargs}")
+        print(f"[SQL LOG] Args: {args} Kwargs: {kwargs} logged at: {datetime.now()}")
         result = func(*args,  **kwargs)
         return result
     return wrapper
