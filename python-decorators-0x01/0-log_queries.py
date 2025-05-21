@@ -59,7 +59,8 @@ def fetch_all_users(query):
 
     return results
 
-create_table("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)")
-insert_records("INSERT INTO users (name) VALUES (?)", (Faker().name(),))
+faker = Faker()
+create_table("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)")
+insert_records("INSERT INTO users (name, email) VALUES (?, ?)", (faker.name(), faker.email()))
 users = fetch_all_users(query="SELECT * FROM users")
 print(users)
