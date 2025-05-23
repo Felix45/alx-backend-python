@@ -60,7 +60,8 @@ def fetch_all_users(query):
     return results
 
 faker = Faker()
-create_table("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)")
-insert_records("INSERT INTO users (name, email) VALUES (?, ?)", (faker.name(), faker.email()))
+create_table("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT, age INTEGER)")
+for _ in range(100):
+    insert_records("INSERT INTO users (name, email, age) VALUES (?, ?, ?)", (faker.name(), faker.email(), faker.random_int(2,100)))
 users = fetch_all_users(query="SELECT * FROM users")
 print(users)
