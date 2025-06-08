@@ -28,6 +28,11 @@ class ConversationSerializer(serializers.ModelSerializer):
     messages = serializers.SerializerMethodField()
     conversation_name = serializers.CharField(required=False)
 
+    class Meta:
+        model = Conversation
+        fields = ['conversation_id', 'participants', 'created_at', 'messages', 'conversation_name']
+        read_only_fields = ['conversation_id', 'created_at']
+
     def get_messages(self, obj):
         """Return serialized messages for the conversation."""
         return MessageSerializer(obj.messages.all(), many=True).data
@@ -36,8 +41,3 @@ class ConversationSerializer(serializers.ModelSerializer):
         if not value:
             raise serializers.ValidationError("Conversation name is required.")
         return value
-
-    class Meta:
-        model = Conversation
-        fields = ['conversation_id', 'participants', 'created_at']
-        read_only_fields = ['conversation_id', 'created_at']
