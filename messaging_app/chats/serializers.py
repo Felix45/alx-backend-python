@@ -31,6 +31,11 @@ class ConversationSerializer(serializers.ModelSerializer):
     def get_messages(self, obj):
         """Return serialized messages for the conversation."""
         return MessageSerializer(obj.messages.all(), many=True).data
+    
+    def validate_conversation_name(self, value):
+        if not value:
+            raise serializers.ValidationError("Conversation name is required.")
+        return value
 
     class Meta:
         model = Conversation

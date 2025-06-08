@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.response import Response
 from .models import Conversation, Message
 from .serializers import ConversationSerializer, MessageSerializer
@@ -8,6 +8,9 @@ class ConversationViewSet(viewsets.ViewSet):
     """
     ViewSet for managing conversations.
     """
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['participants__first_name', 'participants__last_name', 'conversation_id']
     
     def list(self, request):
         """
@@ -42,6 +45,8 @@ class MessageViewSet(viewsets.ViewSet):
     """
     ViewSet for managing messages.
     """
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['sender__first_name', 'sender__last_name', 'message_body', 'message_id']
     
     def list(self, request):
         """
