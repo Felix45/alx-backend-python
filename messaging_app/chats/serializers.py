@@ -25,7 +25,12 @@ class ConversationSerializer(serializers.ModelSerializer):
     """Serializer for the Conversation model."""
 
     participants = UserSerializer(many=True, read_only=True)
-    messages = MessageSerializer(many=True, read_only=True)
+    messages = serializers.SerializerMethodField()
+    conversation_name = serializers.CharField(required=False)
+
+    def get_messages(self, obj):
+        """Return serialized messages for the conversation."""
+        return MessageSerializer(obj.messages.all(), many=True).data
 
     class Meta:
         model = Conversation
