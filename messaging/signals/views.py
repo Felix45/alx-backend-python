@@ -1,7 +1,7 @@
 # views.py
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import Message
 from django.db.models import Prefetch
@@ -35,3 +35,8 @@ def get_thread(message):
             'replies': get_thread(reply)
         })
     return thread
+
+@login_required
+def inbox(request):
+    unread_messages = Message.unread.for_user(request.user).only('id', 'sender', 'content', 'timestamp')
+    return render(request, 'inbox.html', {'messages': unread_messages})

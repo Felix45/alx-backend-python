@@ -3,11 +3,15 @@ from django.contrib.auth.models import User
 
 class Message(models.Model):
     ''' A model representing a message in the system. '''
+    objects = models.Manager()  # Default manager
+    unread = models.Manager()  # Custom manager for unread messages
+    read_messages = models.Manager()  # Custom manager for read messages
 
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
     content = models.TextField()
     edited  = models.BooleanField(default=False, help_text="Indicates if the message has been edited.")
+    read    = models.BooleanField(default=False, help_text="Indicates if the message has been read.")
     parent_message = models.ForeignKey('self', related_name='replies', on_delete=models.CASCADE, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
