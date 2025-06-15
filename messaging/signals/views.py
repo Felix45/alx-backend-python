@@ -38,5 +38,5 @@ def get_thread(message):
 
 @login_required
 def inbox(request):
-    unread_messages = Message.unread.for_user(request.user).only('id', 'sender', 'content', 'timestamp')
+    unread_messages = Message.unread.unread_for_user(request.user)
     return render(request, 'inbox.html', {'messages': unread_messages})
