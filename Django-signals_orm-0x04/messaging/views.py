@@ -13,25 +13,16 @@ def delete_user(request):
     user.delete()
     return redirect('home')
 
+@login_required
 def get_threaded_messages(request):
+    messages = Message.objects.filter(sender=request.user) | Message.objects.filter(receiver=request.user)
     messages = (
-        Message.objects
-        .filter(receiver=request.user, parent_message__isnull=True)
-        .select_related('sender', 'receiver')
+        messages
+        .select_related('sender', 'receiver', 'parent_message')
         .prefetch_related(
-            Prefetch('replies', queryset=Message.objects.select_related('sender', 'receiver'))
+            Prefetch('replies', queryset=Message.objects.select_related('sender', 'receiver', 'parent_message'))
         )
         .order_by('-timestamp')
     )
+
     return messages
-
-
-def get_thread(message):
-    thread = []
-    replies = message.replies.select_related('sender').all()
-    for reply in replies:
-        thread.append({
-            'message': reply,
-            'replies': get_thread(reply)
-        })
-    return thread
