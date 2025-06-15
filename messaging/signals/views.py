@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import Message
 from django.db.models import Prefetch
+from django.views.decorators.cache import cache_page
 
 @login_required
 def delete_user(request):
@@ -36,6 +37,7 @@ def get_thread(message):
         })
     return thread
 
+@cache_page(60)
 @login_required
 def inbox(request):
     unread_messages = Message.unread.unread_for_user(request.user)
