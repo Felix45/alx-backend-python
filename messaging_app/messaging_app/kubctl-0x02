@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Objective: Deploy blue & green versions and verify logs
+
+set -e
+
+echo "Deploying blue (current) version..."
+kubectl apply -f blue_deployment.yaml
+
+echo "Deploying green (new) version..."
+kubectl apply -f green_deployment.yaml
+
+echo "Applying service to point to blue..."
+kubectl apply -f kubeservice.yaml
+
+echo "Checking logs for green deployment pods..."
+
+GREEN_PODS=$(kubectl get pods -l version=green -o name)
+
+for pod in $GREEN_PODS; do
+  echo "Logs from $pod"
+  kubectl logs $pod || echo "Error getting logs from $pod"
+done

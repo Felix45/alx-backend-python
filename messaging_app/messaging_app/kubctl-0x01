@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Objective: Scale, test, and monitor your Django app deployment
+
+set -e
+
+DEPLOYMENT_NAME="messaging_app_deployment"
+SERVICE_NAME="messaging_app_service"
+NAMESPACE="default"
+
+echo "Scaling deployment '$DEPLOYMENT_NAME' to 3 replicas..."
+kubectl scale deployment $DEPLOYMENT_NAME --replicas=3 --namespace=$NAMESPACE
+
+echo "Waiting for pods to be ready..."
+sleep 10
+kubectl get pods --namespace=$NAMESPACE
+
+echo "Port-forwarding the Django service to localhost:8000..."
+kubectl port-forward service/$SERVICE_NAME 8000:8000 --namespace=$NAMESPACE &
+PF_PID=$!
+
+# Give port-forward some time to establish
+sleep 5
+
+echo "Running load test using wrk..."
+wrk -t4 -c20 -d15s http://127.0.0.1:8000/  # Adjust the URL path if needed
+
+echo "Stopping port-forward..."
+kill $PF_PID
+
+echo "Monitoring resource usage (CPU & memory)..."
+kubectl top pods --namespace=$NAMESPACE
